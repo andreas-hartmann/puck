@@ -2,7 +2,7 @@
 /*
 Plugin Name: Puck
 Description: A WordPress plugin for automating news feeds and mailing lists.
-Version: 0.5.1
+Version: 0.6.0
 Author: Andreas Hartmann
 Author URI: https://ohok.org/
 */
@@ -30,6 +30,7 @@ function puck_register_webhook_post_type() {
         'show_ui'      => true,
         'has_archive'  => false,
         'supports'     => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
+        'show_in_rest' => true,
     ));
 }
 
@@ -97,8 +98,40 @@ function handle_hooks_subscribe_shortcode($atts) {
 
     ob_start();
     ?>
-    <form method="post">
-        <input type="email" name="email" required>
+    <style>
+        .subscribe-form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--background-color, #f7f7f7);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+        .subscribe-form input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color, #ccc);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .subscribe-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color, #4CAF50);
+            color: var(--text-color, white);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .subscribe-form button:hover {
+            background-color: var(--primary-color-dark, #45a049);
+        }
+    </style>
+    <form class="subscribe-form" method="post">
+        <input type="email" name="email" placeholder="Enter your email" required>
         <button type="submit">Subscribe</button>
     </form>
     <?php
